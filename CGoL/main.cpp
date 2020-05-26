@@ -27,12 +27,7 @@ public:
 		//or what have you.
 		std::uniform_int_distribution<unsigned int> distr;
 
-		/*for (int i = 0; i < CELLS / (sizeof(int) * 8); i++)
-			cellBitArray[i] = distr(eng);*/
-
-		/*cellBitArray[15] = 1024000;
-		cellBitArray[16] = 1034000;
-		cellBitArray[17] = 1044000;*/
+		
 	}
 
 public:
@@ -46,8 +41,6 @@ public:
 
 	bool OnUserUpdate(float fElapsedTime) override
 	{
-		// called once per frame, draws random coloured pixels
-
 		switch (state)
 		{
 			case USER_SELECT_GRID:
@@ -169,13 +162,17 @@ private:
 			//check if cell is alive or not
 			if (testBit(cellMap, i)) //alive
 			{
-				if (neighbourCount < 2 != neighbourCount > 3)
+				if (neighbourCount < 2 || neighbourCount > 3)
 					clearBit(newCellMap, i);
+				else
+					setBit(newCellMap, i);
 			}
 			else //dead
 			{
 				if (neighbourCount == 3)
 					setBit(newCellMap, i);
+				else
+					clearBit(newCellMap, i);
 			}
 		}
 
